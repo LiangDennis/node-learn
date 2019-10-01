@@ -218,12 +218,14 @@
     let current = "";//当前的目录
     let index = 0;
     while(current = arr[index++]) {
+      // 如果是文件就continue
+      if(fs.statSync(current).isFile()) continue;
       let dirs = fs.readdirSync(current);
       dirs = dirs.map(item => path.join(current,item));
       arr = [...arr,...dirs];//合并
     }
     // 循环删除即可，需要判断是否是文件
-    // console.log(arr);
+    console.log(arr);
     for(let i=arr.length-1;i>=0;i--) {
       let statObj = fs.statSync(arr[i]);
       if(statObj.isFile()) {
@@ -252,8 +254,21 @@
     let current = "";
     let index = 0;
     current = arr[index]
-    fs.readdir(current,(err,dirs)=> {
-      console.log(dirs);
+    // 如果一传进来就是文件，就done
+    function done() {
+      if(current = arr[index++]) {
+        console.log(arr);
+      }
+    }
+    fs.stat(dir,(err,statObj) => {
+      if(statObj.isFile()) {
+        done();
+      }else {
+        fs.readdir(current,(err,dirs)=> {
+          // console.log(dirs);
+          
+        })
+      }
     })
   }
   asyncWide('a',()=>{
