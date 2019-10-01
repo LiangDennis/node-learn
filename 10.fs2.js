@@ -140,7 +140,7 @@
 */
 
 // Promise 方式
-
+/*
 {
   const fs = require('fs')
   const path = require('path')
@@ -169,7 +169,7 @@
     console.log("remove ok");
   })
 }
-
+*/
 
 /*
 // async 和 await
@@ -223,10 +223,40 @@
       arr = [...arr,...dirs];//合并
     }
     // 循环删除即可，需要判断是否是文件
-    for(let i=0;i<arr.length;i++) {
-      fs.statSync(arr[i]);
+    // console.log(arr);
+    for(let i=arr.length-1;i>=0;i--) {
+      let statObj = fs.statSync(arr[i]);
+      if(statObj.isFile()) {
+        fs.unlinkSync(arr[i]);
+      }else {
+        fs.rmdirSync(arr[i]);
+      }
     }
+    console.log('remove ok');
   }
   wide('a');
 }
 */
+
+
+{
+  // 异步广度删除
+  // 找到所有的文件及文件夹，完成一个完整的文件队列
+  // 所有完成后，删除所有文件夹
+
+  const fs = require('fs')
+  const path = require('path')
+
+  function asyncWide(dir,callback) {
+    let arr = [dir];
+    let current = "";
+    let index = 0;
+    current = arr[index]
+    fs.readdir(current,(err,dirs)=> {
+      console.log(dirs);
+    })
+  }
+  asyncWide('a',()=>{
+    console.log('remove ok');
+  });
+}
