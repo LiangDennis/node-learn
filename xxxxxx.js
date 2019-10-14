@@ -61,3 +61,28 @@
   let arr = [1,2,3,5,4,6,7,8];
   arr.sort();
   console.log(arr);
+
+/**
+ * 从1-10000的所有对称数
+ * 
+ */
+
+  {
+    let handleArr = [];
+    for (let index = 1; index < 10000; index++) {
+      let arrIndex = index.toString().split("");
+      let flag = true;
+      for(let i=0;i<arrIndex.length/2;i++) {
+        if(arrIndex[i] !== arrIndex[arrIndex.length-1-i]) {
+          flag = false;
+          break;
+        }
+      }
+      // 如果检验通过，push进handle中
+      if(flag) {
+        handleArr.push(Number(arrIndex.join("")));
+      }
+      // console.log(index.toString().split(""));
+    }
+    console.log(handleArr);
+  }
