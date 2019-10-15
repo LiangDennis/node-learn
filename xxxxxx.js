@@ -67,6 +67,7 @@
  * 
  */
 
+ /*
   {
     let handleArr = [];
     for (let index = 1; index < 10000; index++) {
@@ -85,4 +86,43 @@
       // console.log(index.toString().split(""));
     }
     console.log(handleArr);
+  }
+  */
+
+  {
+    let p = function (flag) {
+      return new Promise((resolve, reject) => {
+        if(flag === 1) {
+          resolve({
+            error_code: "101",
+            message:"success",
+            data:2
+          })
+        }else if (flag === 2) {
+          resolve({
+            error_code: "102",
+            message: "success",
+            data: 3
+          })
+        }else {
+          reject({
+            error_code: "100",
+            message: "fail",
+            data: null
+          })
+        }
+      }) 
+    }
+    p(1).then(res => {
+      console.log(res);
+      return p(res.data)
+    }).then(res => {
+      console.log(res);
+      return p(res.data)
+    }).then(res => {
+      console.log(res);
+    }).catch(err => {
+      console.log("fail");
+      console.log(err);
+    })
   }
